@@ -84,6 +84,27 @@
 				dialogVisible: false,
 				pwd: null,
 				dialogVisible1: false,
+				status:null,
+				msg:'INPUT',
+				websock: null,
+				options:[
+					{
+						label:'请输入密码',
+						value:'INPUT'
+					},
+					{
+						label:'重置',
+						value:'RESET'
+					},
+					{
+						label:'操作成功',
+						value:'SUCCESS'
+					},
+					{
+						label:'密码错误',
+						value:'FAILED'
+					}
+				],
 			}
 		},
 		methods: {
@@ -131,7 +152,13 @@
 							this.$alert('成功', '提示', {
 								confirmButtonText: '确定',
 							});
-							window.location.reload();
+							this.websock.send("SUCCESS");
+						}
+						else{
+							this.$alert('失败', '提示', {
+								confirmButtonText: '确定',
+							});
+							this.websock.send("FAILED");
 						}
 					})
 					.catch(err => {
@@ -156,7 +183,13 @@
 							this.$alert('成功', '提示', {
 								confirmButtonText: '确定',
 							});
-							window.location.reload();
+							this.websock.send("SUCCESS");
+						}
+						else{
+							this.$alert('失败', '提示', {
+								confirmButtonText: '确定',
+							});
+							this.websock.send("FAILED");
 						}
 					})
 					.catch(err => {

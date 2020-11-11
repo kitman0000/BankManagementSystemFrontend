@@ -27,7 +27,6 @@
 					<el-button type="text" @click="getDetail(scope.row.id)">查看详细</el-button>
 					<el-button type="text" @click="getAccount(scope.row.id)">查看账户</el-button>
 				</template>
-
 			</el-table-column>
 			<el-table-column label="操作" align="center" min-width="100" v-if="AllowCreateAccount == true">
 				<template slot-scope="scope">
@@ -42,14 +41,20 @@
 		</div>
 
 		<el-dialog title="提示" :visible.sync="dialogVisible1" width="90%">
+			<el-dialog width="60%" title="存款金额" :visible.sync="innerVisible" append-to-body>
+				<el-form ref="form" label-width="150px">
+					<el-form-item label="活期存款金额:">
+						<span>{{balance}}</span>
+					</el-form-item>
+					<el-form-item label="定期存款金额:">
+						<span>{{timeBalance}}</span>
+					</el-form-item>
+				</el-form>
+			</el-dialog>
 			<el-table :data="AccountDetail" style="width: 100%">
 				<el-table-column prop="name" label="账户名" width="200">
 				</el-table-column>
 				<el-table-column prop="id" label="账号" width="200">
-				</el-table-column>
-				<el-table-column prop="balance" label="余额" width="200">
-				</el-table-column>
-				<el-table-column prop="demandDesposit" label="定期存款" width="200">
 				</el-table-column>
 				<el-table-column label="账号类别" width="220">
 					<template slot-scope="scope">
@@ -67,7 +72,11 @@
 						<span v-if="scope.row.available == false">冻结</span>
 					</template>
 				</el-table-column>
-
+				<el-table-column label="查看" align="center" min-width="100">
+					<template slot-scope="scope">
+						<el-button type="text" @click="getBalance(scope.row)">查看存款金额</el-button>
+					</template>
+				</el-table-column>
 			</el-table>
 			<span slot="footer" class="dialog-footer">
 				<el-button type="primary" @click="dialogVisible1 = false">确 定</el-button>
@@ -185,6 +194,9 @@
 				AccountDetail: [],
 				dialogVisible1: false,
 				AllowCreateAccount: null,
+				innerVisible:false,
+				balance:null,
+				timeBalance:null,
 			}
 		},
 		methods: {
@@ -337,60 +349,61 @@
 						}
 					})
 					.then(res => {
-							this.AccountDetail = eval(res.data);
-							console.log(this.AccountDetail);
-							for (var i = 0; i < this.AccountDetail.length; i++) {
-								axios.get('/api/publicTime/deposit', {
-										params: {
-											accountID: this.AccountDetail[i].id
-										},
-										headers: {
-											"token": localStorage.getItem("token"),
-										}
-									})
-									.then(res => {
-											var b = eval(res.data);
-											if (b.length != 0) {
-												this.$set(this.AccountDetail[i], 'demandDesposit', b[0].amount);
-											}
-									
-										 else {
-											this.AccountDetail[i].set("demandDesposit", "无存款");
-											console.log(AccountDetail[i]);
-										}
-									})
-							.catch(err => {
-								console.log(err);
-							});
-						}
+						this.AccountDetail = eval(res.data);
 						this.dialogVisible1 = true;
 					})
-			.catch(err => {
-				this.$alert('请求失败', '提示', {
-					confirmButtonText: '确定',
-				});
-			});
-		},
-		isAllowCreateAccount() {
-			axios.get('/api/publicService/allowCreateAccount', {
-					params: {},
-					headers: {
-						"token": localStorage.getItem("token"),
-					}
-				})
-				.then(res => {
-					this.AllowCreateAccount = res.data;
-				})
-				.catch(err => {
-					this.$alert('请求失败', '提示', {
-						confirmButtonText: '确定',
+					.catch(err => {
+						this.$alert('请求失败', '提示', {
+							confirmButtonText: '确定',
+						});
 					});
-				});
+			},
+			isAllowCreateAccount() {
+				axios.get('/api/publicService/allowCreateAccount', {
+						params: {},
+						headers: {
+							"token": localStorage.getItem("token"),
+						}
+					})
+					.then(res => {
+						this.AllowCreateAccount = res.data;
+					})
+					.catch(err => {
+						this.$alert('请求失败', '提示', {
+							confirmButtonText: '确定',
+						});
+					});
+			},
+			getBalance(index){
+				this.balance = index.balance;
+				axios.get('/api/publicTime/deposit', {
+						params: {
+							accountID:index.id
+						},
+						headers: {
+							"token": localStorage.getItem("token"),
+						}
+					})
+					.then(res => {
+						var a = res.data;
+						if(a.length !=0){
+							this.timeBalance = a[0].amount;
+						}
+						else{
+							this.timeBalance = 0;
+						}
+						this.innerVisible = true;
+					})
+					.catch(err => {
+						this.$alert('请求失败', '提示', {
+							confirmButtonText: '确定',
+						});
+					});
+			}
 		},
-	},
-	beforeMount: function() {
-		this.getDefaultPublicUserList();
-		this.isAllowCreateAccount();
-	}
+		beforeMount: function() {
+			this.getDefaultPublicUserList();
+			this.isAllowCreateAccount();
+		}
 	}
 </script>

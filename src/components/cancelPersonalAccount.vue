@@ -36,7 +36,7 @@
 			return {
 				pwd:null,
 				status:null,
-				msg:null,
+				msg:'INPUT',
 				websock: null,
 				accountId:null,
 				amount:null,
@@ -103,6 +103,13 @@
 						this.$alert('销户成功', '提示', {
 						         confirmButtonText: '确定',
 						       });
+						this.websock.send("SUCCESS");
+					}
+					else{
+						this.$alert('销户失败', '提示', {
+						         confirmButtonText: '确定',
+						       });
+						this.websock.send("FAILED");
 					}
 					
 				})

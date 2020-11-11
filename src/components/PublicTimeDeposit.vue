@@ -41,7 +41,7 @@
 			return {
 				pwd: null,
 				status: null,
-				msg: null,
+				msg: 'INPUT',
 				websock: null,
 				accountID: null,
 				amount: null,
@@ -109,6 +109,7 @@
 							this.$alert('定期存款成功', '提示', {
 								confirmButtonText: '确定',
 							});
+							this.websock.send("SUCCESS");
 						}
 						else{
 							this.$alert('定期存款失败', '提示', {

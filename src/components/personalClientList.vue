@@ -41,11 +41,19 @@
 			</el-pagination>
 		</div>
 
-		<el-dialog title="提示" :visible.sync="dialogVisible1" width="80%">
+		<el-dialog title="提示" :visible.sync="dialogVisible1" width="90%">
+			<el-dialog width="60%" title="存款金额" :visible.sync="innerVisible" append-to-body>
+				<el-form ref="form" label-width="150px">
+					<el-form-item label="活期存款金额:">
+						<span>{{balance}}</span>
+					</el-form-item>
+					<el-form-item label="定期存款金额:">
+						<span>{{timeBalance}}</span>
+					</el-form-item>
+				</el-form>
+			</el-dialog>
 			<el-table :data="AccountDetail" style="width: 100%">
 				<el-table-column prop="id" label="账号" width="250">
-				</el-table-column>
-				<el-table-column prop="balance" label="余额" width="200">
 				</el-table-column>
 				<el-table-column label="账号类别" width="220">
 					<template slot-scope="scope">
@@ -61,7 +69,11 @@
 						<span v-if="scope.row.available == false">冻结</span>
 					</template>
 				</el-table-column>
-				
+				<el-table-column label="查看" align="center" min-width="100">
+					<template slot-scope="scope">
+						<el-button type="text" @click="getBalance(scope.row)">查看存款金额</el-button>
+					</template>
+				</el-table-column>
 			</el-table>
 			<span slot="footer" class="dialog-footer">
 				<el-button type="primary" @click="dialogVisible1 = false">确 定</el-button>
@@ -131,6 +143,9 @@
 				AccountDetail:[],
 				dialogVisible1:false,
 				AllowCreateAccount:null,
+				innerVisible:false,
+				balance:null,
+				timeBalance:null,
 			}
 		},
 		methods: {
@@ -308,6 +323,32 @@
 					       });
 				});
 			},
+			getBalance(index){
+				this.balance = index.balance;
+				axios.get('/api/personalTime/deposit', {
+						params: {
+							accountID:index.id
+						},
+						headers: {
+							"token": localStorage.getItem("token"),
+						}
+					})
+					.then(res => {
+						var a = res.data;
+						if(a.length !=0){
+							this.timeBalance = a[0].amount;
+						}
+						else{
+							this.timeBalance = 0;
+						}
+						this.innerVisible = true;
+					})
+					.catch(err => {
+						this.$alert('请求失败', '提示', {
+							confirmButtonText: '确定',
+						});
+					});
+			}
 		},
 		beforeMount: function() {
 			this.getDefaultPublicUserList();

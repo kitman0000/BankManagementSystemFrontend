@@ -43,7 +43,7 @@
 			return {
 				pwd:null,
 				status:null,
-				msg:null,
+				msg:'INPUT',
 				websock: null,
 				accountID:null,
 				amount:null,
@@ -111,11 +111,13 @@
 							this.$alert('转账失败', '提示', {
 							         confirmButtonText: '确定',
 							       });
+							this.websock.send("FAIELD");
 						}
 						else{
 							this.$alert('转账成功', '提示', {
 							         confirmButtonText: '确定',
 							       });
+							this.websock.send("SUCCESS");
 						}
 				
 					}).catch(err=> {

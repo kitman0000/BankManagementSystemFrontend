@@ -45,7 +45,7 @@
 			return {
 				pwd:null,
 				status:null,
-				msg:null,
+				msg:'INPUT',
 				websock: null,
 				accountID:null,
 				amount:null,
@@ -120,6 +120,7 @@
 							this.$alert('成功', '提示', {
 							         confirmButtonText: '确定',
 							       });
+							this.websock.send("SUCCESS");
 						}
 					}).catch(err=> {
 						this.$alert('请求失败', '提示', {

@@ -70,7 +70,7 @@
 				status: null,
 				accountType: null,
 				name: null,
-				msg: null,
+				msg: 'INPUT',
 				websock: null,
 			}
 		},
@@ -116,6 +116,13 @@
 							this.$alert('新建账户成功', '提示', {
 								confirmButtonText: '确定',
 							});
+							this.websock.send("SUCCESS");
+						}
+						else{
+							this.$alert('新建账户失败', '提示', {
+								confirmButtonText: '确定',
+							});
+							this.websock.send("FAILED");
 						}
 
 					}).catch(err => {

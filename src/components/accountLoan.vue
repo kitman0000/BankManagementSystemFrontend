@@ -70,7 +70,7 @@
 				id: null,
 				pwd: null,
 				status: null,
-				msg: null,
+				msg: 'INPUT',
 				websock: null,
 				amount: null,
 				loanList: [],
@@ -152,11 +152,13 @@
 							this.$alert('还款失败', '提示', {
 							         confirmButtonText: '确定',
 							       });
+							this.websock.send("FAILED");
 						}
 						else{
 							this.$alert('还款成功', '提示', {
 							         confirmButtonText: '确定',
 							       });
+							this.websock.send("SUCCESS");
 						}
 				
 					}).catch(err=> {
