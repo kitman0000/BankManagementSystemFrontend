@@ -135,12 +135,11 @@
 				this.dialogVisible1 = true;
 			},
 			TimeToDemand() {
-				axios.get('/api/publicTime/demand', {
-						params: {
-							account: this.account,
-							id: this.id,
-							pwd: this.pwd
-						},
+				var parmas = new URLSearchParams();
+				parmas.append("account",this.account);
+				parmas.append("id",this.id);
+				parmas.append("pwd",this.pwd);
+				axios.post('/api/publicTime/demand',parmas, {
 						headers: {
 							"token": localStorage.getItem("token"),
 						}
@@ -166,12 +165,11 @@
 					});
 			},
 			WithDraw() {
-				axios.get('/api/publicTime/withdraw', {
-						params: {
-							account: this.account,
-							id: this.id,
-							pwd: this.pwd
-						},
+				var parmas = new URLSearchParams();
+				parmas.append("account",this.account);
+				parmas.append("id",this.id);
+				parmas.append("pwd",this.pwd);
+				axios.post('/api/publicTime/withdraw', parmas,{
 						headers: {
 							"token": localStorage.getItem("token"),
 						}

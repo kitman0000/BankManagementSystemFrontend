@@ -107,7 +107,7 @@
 		},
 		methods: {
 			search_button() {
-				axios.get('/api/personalTime/demand', {
+				axios.get('/api/personalTime/deposit', {
 						params: {
 							accountID: this.account,
 						},
@@ -135,12 +135,11 @@
 				this.dialogVisible1 = true;
 			},
 			TimeToDemand() {
-				axios.get('/api/personalTime/demand', {
-						params: {
-							account: this.account,
-							id: this.id,
-							pwd: this.pwd
-						},
+				var parmas = new URLSearchParams();
+				parmas.append("account",this.account);
+				parmas.append("id",this.id);
+				parmas.append("pwd",this.pwd);
+				axios.post('/api/personalTime/demand',parmas,{
 						headers: {
 							"token": localStorage.getItem("token"),
 						}
@@ -166,12 +165,11 @@
 					});
 			},
 			WithDraw() {
-				axios.get('/api/personalTime/withdraw', {
-						params: {
-							account: this.account,
-							id: this.id,
-							pwd: this.pwd
-						},
+				var parmas = new URLSearchParams();
+				parmas.append("account",this.account);
+				parmas.append("id",this.id);
+				parmas.append("pwd",this.pwd);
+				axios.post('/api/personalTime/withdraw',parmas, {						
 						headers: {
 							"token": localStorage.getItem("token"),
 						}

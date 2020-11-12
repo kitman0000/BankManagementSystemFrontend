@@ -199,8 +199,8 @@
 				AllowCreateAccount: null,
 				innerVisible:false,
 				balance:null,
-				timeBalance:null,
-				loan:null,
+				timeBalance:0,
+				loan:0,
 			}
 		},
 		methods: {
@@ -391,12 +391,14 @@
 					.then(res => {
 						var a = res.data;
 						if(a.length !=0){
-							this.timeBalance = a[0].amount;
+							for (var i = 0; i < a.length; i++) {
+								this.timeBalance += a[i].amount;
+							}
 						}
 						else{
 							this.timeBalance = 0;
 						}
-						this.innerVisible = true;
+						
 					})
 					.catch(err => {
 						this.$alert('请求失败', '提示', {
