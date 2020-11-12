@@ -42,15 +42,19 @@
 		</div>
 
 		<el-dialog title="提示" :visible.sync="dialogVisible1" width="90%">
-			<el-dialog width="60%" title="存款金额" :visible.sync="innerVisible" append-to-body>
-				<el-form ref="form" label-width="150px">
-					<el-form-item label="活期存款金额:">
-						<span>{{balance}}</span>
-					</el-form-item>
-					<el-form-item label="定期存款金额:">
-						<span>{{timeBalance}}</span>
-					</el-form-item>
-				</el-form>
+			<el-dialog width="60%" title="金额" :visible.sync="innerVisible" append-to-body>
+				<el-table :data="List" style="width: 100%">
+					<el-table-column prop="amount" label="数额" width="150">
+					</el-table-column>
+					<el-table-column prop="loanDate" v-if="isLoan" label="贷款时间" width="250">
+					</el-table-column>
+					<el-table-column prop="scheduledPayment" v-if="isLoan" label="应还款时间" width="250">
+					</el-table-column>
+					<el-table-column prop="depositDate" v-if="!isLoan" label="存款时间" width="250">
+					</el-table-column>
+					<el-table-column prop="scheduledWithdrawDate" v-if="!isLoan" label="到期时间" width="250">
+					</el-table-column>
+				</el-table>
 			</el-dialog>
 			<el-table :data="AccountDetail" style="width: 100%">
 				<el-table-column prop="id" label="账号" width="250">
@@ -60,6 +64,8 @@
 						<span v-if="scope.row.accountType == 1">I类卡</span>
 						<span v-if="scope.row.accountType == 2">II 类卡</span>
 					</template>
+				</el-table-column>
+				<el-table-column prop="balance" label="活期余额" width="220">
 				</el-table-column>
 				<el-table-column prop="authDate" label="开户时间" width="280">
 				</el-table-column>
@@ -71,7 +77,8 @@
 				</el-table-column>
 				<el-table-column label="查看" align="center" min-width="100">
 					<template slot-scope="scope">
-						<el-button type="text" @click="getBalance(scope.row)">查看存款金额</el-button>
+						<el-button type="text" @click="getBalance(scope.row,true)">查看贷款</el-button>
+						<el-button type="text" @click="getBalance(scope.row,false)">查看定期存款</el-button>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -146,6 +153,9 @@
 				innerVisible:false,
 				balance:null,
 				timeBalance:null,
+				loan:0,
+				isLoan:null,
+				List:[],
 			}
 		},
 		methods: {
@@ -324,30 +334,31 @@
 				});
 			},
 			getBalance(index){
+				this.isLoan = isLoan;
 				this.balance = index.balance;
-				axios.get('/api/personalTime/deposit', {
-						params: {
-							accountID:index.id
-						},
-						headers: {
-							"token": localStorage.getItem("token"),
-						}
-					})
-					.then(res => {
-						var a = res.data;
-						if(a.length !=0){
-							this.timeBalance = a[0].amount;
-						}
-						else{
-							this.timeBalance = 0;
-						}
-						this.innerVisible = true;
-					})
-					.catch(err => {
-						this.$alert('请求失败', '提示', {
-							confirmButtonText: '确定',
-						});
-					});
+				if(isLoan){
+					var api = '/api/loanSearch/accountLoan';
+				}
+				else{
+					var api = '/api/personalTime/deposit';
+				}
+				axios.get(api, {
+					params: {
+						accountID:index.id
+					},
+					headers: {
+						"token": localStorage.getItem("token"),
+					}
+				})
+				.then(res => {
+					this.List = eval(res.data);
+					this.innerVisible = true;
+				})
+				.catch(err=> {
+					this.$alert('请求失败', '提示', {
+					         confirmButtonText: '确定',
+					       });
+				});
 			}
 		},
 		beforeMount: function() {

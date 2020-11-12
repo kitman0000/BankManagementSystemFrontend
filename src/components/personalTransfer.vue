@@ -101,7 +101,7 @@
 				parmas.append("targetAccount",this.targetAccount);
 				parmas.append("amount",this.amount);
 				parmas.append("pwd",this.pwd);
-				axios.post('/api/publicTransfer/transfer', parmas, {
+				axios.post('/api/personalTransfer/transfer', parmas, {
 						headers: {
 							"token": localStorage.getItem("token"),
 						}
