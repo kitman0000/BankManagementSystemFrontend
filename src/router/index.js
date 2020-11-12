@@ -56,6 +56,7 @@ import PersonalDemandWithdraw from '../components/personalDemandWithdraw.vue'
 import PersonalTimeDeposit from '../components/personalTimeDeposit.vue'
 import PersonalGetTimeDeposit from '../components/personalGetTimeDeposit.vue'
 import AnnouncementList from '../components/announcementListForUser.vue'
+import PersonalTransfer from '../components/personalTransfer.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -69,6 +70,11 @@ const routes = [
     name: 'MainView',
     component: MainView,
 	children:[
+		{
+		  path: '/PersonalTransfer',
+		  name: 'PersonalTransfer',
+		  component: PersonalTransfer
+		},
 		{
 		  path: '/PersonalGetTimeDeposit',
 		  name: 'PersonalGetTimeDeposit',
