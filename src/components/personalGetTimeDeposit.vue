@@ -18,8 +18,6 @@
 			<el-table-column label="操作" align="center" min-width="100">
 				<template slot-scope="scope">
 					<el-button type="text" @click="be(scope.row)">定期转活期</el-button>
-				</template>
-				<template slot-scope="scope">
 					<el-button type="text" @click="twd(scope.row)">定期取款</el-button>
 				</template>
 			</el-table-column>

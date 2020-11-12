@@ -49,6 +49,9 @@
 					<el-form-item label="定期存款金额:">
 						<span>{{timeBalance}}</span>
 					</el-form-item>
+					<el-form-item label="贷款金额:">
+						<span>{{loan}}</span>
+					</el-form-item>
 				</el-form>
 			</el-dialog>
 			<el-table :data="AccountDetail" style="width: 100%">
@@ -197,6 +200,7 @@
 				innerVisible:false,
 				balance:null,
 				timeBalance:null,
+				loan:null,
 			}
 		},
 		methods: {
