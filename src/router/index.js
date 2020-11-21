@@ -57,6 +57,8 @@ import PersonalTimeDeposit from '../components/personalTimeDeposit.vue'
 import PersonalGetTimeDeposit from '../components/personalGetTimeDeposit.vue'
 import AnnouncementList from '../components/announcementListForUser.vue'
 import PersonalTransfer from '../components/personalTransfer.vue'
+import ECharts from '../components/Echarts.vue'
+import vecharts from '../components/v-eharts.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -70,6 +72,16 @@ const routes = [
     name: 'MainView',
     component: MainView,
 	children:[
+		{
+		  path: '/ECharts',
+		  name: 'ECharts',
+		  component: ECharts
+		},
+		{
+		  path: '/vecharts',
+		  name: 'vecharts',
+		  component: vecharts
+		},
 		{
 		  path: '/PersonalTransfer',
 		  name: 'PersonalTransfer',

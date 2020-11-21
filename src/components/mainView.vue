@@ -33,9 +33,8 @@
 				</el-menu>
 			</el-aside>
 			 <el-container>
-				<el-main>
-					<h1 style="font-size: 25px;">{{title}}</h1>
-					<router-view>
+				<el-main style="padding: 0px 0px 0px 0px;">
+					<router-view >
 					</router-view>
 				</el-main>
 			  </el-container>
