@@ -2,7 +2,8 @@
 	<div>
 		<div>
 		<div style="display: inline-block;line-height: 32px;">
-			<span style="line-height: 32px;">123</span>
+			<p style="line-height: 32px;">昨日资产端金额：{{chartData.rows[0].amount}}元</p>
+			<p style="line-height: 32px;">昨日借贷端金额：{{chartData.rows[1].amount}}元</p>
 		</div>
 		<ve-pie :data="chartData" :legend="legend" :title="title" :tooltip="tooltip" :theme="custheme" style="display: inline-block;width: 70%;"></ve-pie>
 		</div>
@@ -35,16 +36,16 @@
 					text: '近20日交易流水次数',
 					left: 'center'
 				},
-				extend: {
-					 'xAxis.0.axisLabel.rotate': -20,
-					  'xAxis.0.axisLabel.interval': 0,
-					  'xAxis.0.axisTick.show': true,
-					  'xAxis.0.type': 'category',
-					  'xAxis.0.axisTick.alignWithLabel': true,
-					  'xAxis.0.axisLabel.align': 'center',
-					  'xAxis.0.axisLabel.margin': 35,
+				extend: {               										//柱状图
+					 'xAxis.0.axisLabel.rotate': -20,							//标签旋转，太多显示不下
+					  'xAxis.0.axisLabel.interval': 0,							//标签全部显示
+					  'xAxis.0.axisTick.show': true,							//刻度显示
+					  'xAxis.0.type': 'category',								
+					  'xAxis.0.axisTick.alignWithLabel': true,					//刻度标签对齐
+					  'xAxis.0.axisLabel.align': 'center',						//刻度标签居中
+					  'xAxis.0.axisLabel.margin': 35,							//刻度标签距离刻度大小
 				},
-				grid: {
+				grid: {															//柱状图位置
 				        left: '3%',
 				        right: '4%',
 				        bottom: '3%',
@@ -55,15 +56,15 @@
 					left: 'center'
 				},
 				custheme: require("../assets/purple-passion.json"),
-				legend: {
+				legend: {														//饼图图例
 					orient: 'vertical',
-					left: 'left',
+					left: 'left',												//位置在左
 				},
 				tooltip: {
-					trigger: 'item',
+					trigger: 'item',											//饼图显示文本格式（勿动）
 					formatter: '{b} : {c}元 ({d}%)',
 				},
-				amountCountTooltip: {
+				amountCountTooltip: {											//折线显示文本格式（勿动）
 					trigger: 'axis',
 					formatter: function(datas) {
 						var res = datas[0].name + '<br/>',
@@ -87,7 +88,7 @@
 						return res;
 					}
 				},
-				HisTooltip: {
+				HisTooltip: {														//柱状图显示文本格式（勿动）
 					trigger: 'axis',
 					formatter: function(datas) {
 						var res = datas[0].name + '<br/>',
