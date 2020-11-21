@@ -33,8 +33,9 @@
 				</el-menu>
 			</el-aside>
 			 <el-container>
-				<el-main>
+				<el-main style="overflow-y: visible;max-height: 1000px;">
 					<h1 style="font-size: 25px;">{{title}}</h1>
+				
 					<router-view>
 					</router-view>
 				</el-main>

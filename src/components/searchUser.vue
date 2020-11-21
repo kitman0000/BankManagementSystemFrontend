@@ -8,7 +8,7 @@
 		<label style="margin-left: 10px;">用户名：</label>
 		<el-input placeholder="所要查询的用户名" v-model="searchUserName" style="width: 300px;"></el-input>
 		<el-button type="primary" @click="searchUser_searchButton()" icon="el-icon-search" style="margin-left: 10px;">搜索</el-button>
-		<el-table :data="tableData2" style="width: 100%" :row-class-name="tableRowClassName" @row-dblclick="userDetail">
+		<el-table :data="tableData2" style="width: 100%"  @row-dblclick="userDetail">
 			<el-table-column prop="userID" label="用户ID" width="200">
 			</el-table-column>
 			<el-table-column prop="username" label="用户名" width="220">
