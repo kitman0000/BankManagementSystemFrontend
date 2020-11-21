@@ -37,6 +37,7 @@
 					<h1 style="font-size: 25px;">{{title}}</h1>
 				
 					<router-view>
+
 					</router-view>
 				</el-main>
 			  </el-container>
