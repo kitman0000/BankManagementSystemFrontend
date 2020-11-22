@@ -1,8 +1,8 @@
 <template>
 	<div>
 		<el-form label-width="80px" v-model="detail">
-			<el-form-item label="机构id">
-				<el-input style="width: 80px;" v-model="detail.agencyName" class="inp"></el-input>
+			<el-form-item label="所属机构">
+				<el-input style="width: 200px;" v-model="detail.agencyName" class="inp"></el-input>
 				<el-button type="primary" icon="el-icon-plus" @click='dialogVisible = true' style="margin-left: 15px;">选择开户机构</el-button>
 			</el-form-item>
 			<el-form-item label="用户名">
