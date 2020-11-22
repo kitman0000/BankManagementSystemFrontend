@@ -64,6 +64,15 @@
 								
 								//setTimeout(() => location.reload(), 1000);
 							}
+							else if(res.data == 'USER_LOGIN_BAN'){
+								this.shoot = false;
+								//this.shake = true;
+								
+								this.$notify.error({
+								  title: '抱歉',
+								  message: '此账号已被禁用'
+								});
+							}
 							else{
 								localStorage.setItem('token',res.data);
 								localStorage.setItem('username',this.userName);
