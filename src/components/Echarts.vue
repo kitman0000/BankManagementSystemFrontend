@@ -8,7 +8,7 @@
 </template>
 
 <script>
-	import theme from '../assets/theme'
+	//import theme from '../assets/theme'
 	import axios from 'axios';
 	export default {
 		data() {
@@ -153,7 +153,7 @@
 
 				// 使用刚指定的配置项和数据显示图表。
 				myChart.setOption(option);
-
+				
 
 			}
 		},
