@@ -1,18 +1,17 @@
 <template>
 	<div>
 		<div>
-			<div  class="card" style="display: inline-block;color: #000;float: left;margin-top: 0px;width: 35%;padding-left: 250px;font-weight:900;font-size: 30px;height: 250px;padding-top: 70px;">
+			<div  class="card" style="display: inline-block;color: #000;float: left;margin-top: 0px;width: 35%;padding-left: 160px;font-weight:900;font-size: 30px;height: 250px;padding-top: 70px;">
 				<p style="line-height: 32px;">昨日资产端金额：<span style="color: #229C11;">{{chartData.rows[0].amount}} </span>元</p>
 				<p style="line-height: 32px;">昨日借贷端金额：<span style="color: #DD2D2D;">{{chartData.rows[1].amount}}</span>元</p>
 			</div>
-			<ve-pie  class="card" :extend="pieExtend" :data="chartData" :legend="legend" :grid="pieGrid" :title="title" :tooltip="tooltip" :theme="custheme" style="display: inline-block;width: 43%;margin-left: 42px;padding-left: 100px;padding-top: 30px;height: 290px;"></ve-pie>
+			<ve-pie  class="card" :extend="pieExtend" :data="chartData" :legend="legend" :grid="pieGrid" :title="title" :tooltip="tooltip" :theme="custheme" style="display: inline-block;width: 40%;margin-left: 35px;padding-left: 100px;padding-top: 30px;height: 290px;"></ve-pie>
 		</div>
 		<div style="margin-top: 20px;">
-			<ve-line class="card" :data="amountLine" :extend="extendAmount" :title="title1" :theme="custheme" :grid="lineGrid" :tooltip="amountLineTooltip" :legend-visible="false" style="display: inline-block;width: 900px;padding-top: 40px;height: 250px;"></ve-line>
-			<ve-line class="card" :data="amountCount" :extend="extendCount" :title="title2" :theme="custheme" :grid="lineGrid" :tooltip="amountCountTooltip" :legend-visible="false"
-			 style="display: inline-block;width: 900px;margin-left: 40px;padding-top: 40px;height: 250px;"></ve-line>
+			<ve-line class="card" :data="amountLine" :extend="extendAmount" :title="title1" :theme="custheme" :grid="lineGrid" :tooltip="amountLineTooltip" :legend-visible="false" style="display: inline-block;width: 45%;padding-top: 40px;height: 250px;"></ve-line>
+			<ve-line class="card" :data="amountCount" :extend="extendCount" :title="title2" :theme="custheme" :grid="lineGrid" :tooltip="amountCountTooltip" :legend-visible="false" style="display: inline-block;width: 46%;margin-left: 40px;padding-top: 40px;height: 250px;"></ve-line>
 		</div>
-		<ve-histogram class="card" style="margin-top: 20px;height: 230px;" :data="HisData" :extend="extendAgency" :grid="grid"  :title="HisTitle" :legend-visible="false" :tooltip="HisTooltip" :theme="custheme"></ve-histogram>
+		<ve-histogram class="card" style="margin-top: 20px;height: 230px;width: 94%;" :data="HisData" :extend="extendAgency" :grid="grid"  :title="HisTitle" :legend-visible="false" :tooltip="HisTooltip" :theme="custheme"></ve-histogram>
 	</div>
 </template>
 
