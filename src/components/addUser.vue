@@ -119,7 +119,7 @@
 					}
 					var addDetail = new URLSearchParams();
 					addDetail.append("username", this.detail.username);
-					changedDetail.append("agencyID", this.detail.agencyID);
+					addDetail.append("agencyID", this.detail.agencyID);
 					addDetail.append("nickName", this.detail.nickName, );
 					addDetail.append("status", index1);
 					addDetail.append("role", this.detail.role);
@@ -128,7 +128,7 @@
 					addDetail.append("sex", index2);
 					addDetail.append("pwd", this.password);
 					addDetail.append("birthday", this.detail.birthday);
-					changedDetail.append("pictureUrl", this.pictureUrl);
+					addDetail.append("pictureUrl", this.pictureUrl);
 					axios.post('/api/user/userDetail', addDetail, {
 							headers: {
 								"token": localStorage.getItem("token"),
@@ -154,7 +154,7 @@
 					});
 			},
 			choseAgency(row) {
-				this.agencyID = row.id;
+				this.detail.agencyID = row.id;
 				this.detail.agencyName = row.name;
 				this.dialogVisible = false;
 			},

@@ -121,7 +121,7 @@
 					var changedDetail = new URLSearchParams();
 					changedDetail.append("userID", localStorage.getItem("chosenUser"));
 					changedDetail.append("username", this.detail.username);
-					changedDetail.append("agencyID", this.agencyID);
+					changedDetail.append("agencyID", this.detail.agencyID);
 					changedDetail.append("nickName", this.detail.nickName, );
 					changedDetail.append("status", index1);
 					changedDetail.append("role", this.detail.role);
@@ -143,7 +143,7 @@
 				}
 			},
 			choseAgency(row){
-				this.agencyID = row.id;
+				this.detail.agencyID = row.id;
 				this.detail.agencyName = row.name;
 				this.dialogVisible = false;
 			},
