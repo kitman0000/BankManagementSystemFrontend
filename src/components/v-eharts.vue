@@ -1,18 +1,18 @@
 <template>
 	<div>
 		<div>
-		<div style="display: inline-block;line-height: 32px;">
-			<p style="line-height: 32px;">昨日资产端金额：{{chartData.rows[0].amount}}元</p>
-			<p style="line-height: 32px;">昨日借贷端金额：{{chartData.rows[1].amount}}元</p>
+			<div  class="card" style="display: inline-block;color: #000;float: left;margin-top: 0px;width: 35%;padding-left: 250px;font-weight:900;font-size: 30px;height: 250px;padding-top: 70px;">
+				<p style="line-height: 32px;">昨日资产端金额：<span style="color: #229C11;">{{chartData.rows[0].amount}} </span>元</p>
+				<p style="line-height: 32px;">昨日借贷端金额：<span style="color: #DD2D2D;">{{chartData.rows[1].amount}}</span>元</p>
+			</div>
+			<ve-pie  class="card" :extend="pieExtend" :data="chartData" :legend="legend" :grid="pieGrid" :title="title" :tooltip="tooltip" :theme="custheme" style="display: inline-block;width: 43%;margin-left: 42px;padding-left: 100px;padding-top: 30px;height: 290px;"></ve-pie>
 		</div>
-		<ve-pie :data="chartData" :legend="legend" :title="title" :tooltip="tooltip" :theme="custheme" :extend="extend1" style="display: inline-block;width: 70%;"></ve-pie>
+		<div style="margin-top: 20px;">
+			<ve-line class="card" :data="amountLine" :extend="extendAmount" :title="title1" :theme="custheme" :grid="lineGrid" :tooltip="amountLineTooltip" :legend-visible="false" style="display: inline-block;width: 900px;padding-top: 40px;height: 250px;"></ve-line>
+			<ve-line class="card" :data="amountCount" :extend="extendCount" :title="title2" :theme="custheme" :grid="lineGrid" :tooltip="amountCountTooltip" :legend-visible="false"
+			 style="display: inline-block;width: 900px;margin-left: 40px;padding-top: 40px;height: 250px;"></ve-line>
 		</div>
-		<div style="margin-top: 1px;">
-			<ve-line :data="amountLine" :title="title1" :theme="custheme" :tooltip="amountLineTooltip" :legend-visible="false" style="display: inline-block;width: 50%;"></ve-line>
-			<ve-line :data="amountCount" :title="title2" :theme="custheme" :tooltip="amountCountTooltip" :legend-visible="false"
-			 style="display: inline-block;width: 50%;"></ve-line>
-		</div>
-		<ve-histogram :data="HisData" :grid="grid"  :title="HisTitle" :legend-visible="false" :extend="extend" :tooltip="HisTooltip" :theme="custheme"></ve-histogram>
+		<ve-histogram class="card" style="margin-top: 20px;height: 230px;" :data="HisData" :extend="extendAgency" :grid="grid"  :title="HisTitle" :legend-visible="false" :tooltip="HisTooltip" :theme="custheme"></ve-histogram>
 	</div>
 </template>
 
@@ -37,6 +37,14 @@
 					text: '近20日交易流水次数',
 					left: 'center'
 				},
+				pieExtend:{
+					color:["#1ACFB9","#F2AB8C","#6B11D3"],
+					series:{
+							type:'pie',
+							radius : '40%',
+							center: ['50%','40%'],
+						}	
+				},
 				extend: {               										//柱状图
 					 'xAxis.0.axisLabel.rotate': -20,							//标签旋转，太多显示不下
 					  'xAxis.0.axisLabel.interval': 0,							//标签全部显示
@@ -44,19 +52,50 @@
 					  'xAxis.0.type': 'category',								
 					  'xAxis.0.axisTick.alignWithLabel': true,					//刻度标签对齐
 					  'xAxis.0.axisLabel.align': 'center',						//刻度标签居中
+					  'xAxis.0.axisLabel.margin': 35,							//刻度标签距离刻度大小		
+				},
+				extendAmount: {               										//柱状图
+					 'xAxis.0.axisLabel.rotate': -20,							//标签旋转，太多显示不下
+					  'xAxis.0.axisLabel.interval': 2,							//标签全部显示
+					  'xAxis.0.axisTick.show': true,							//刻度显示
+					  'xAxis.0.type': 'category',								
+					  'xAxis.0.axisTick.alignWithLabel': true,					//刻度标签对齐
+					  'xAxis.0.axisLabel.align': 'center',						//刻度标签居中
 					  'xAxis.0.axisLabel.margin': 35,							//刻度标签距离刻度大小
+					  'color':["#2132A7"]
 				},
-				extend1:{
-					series:{
-							type:'pie',
-							radius : '70%',
-							center: ['60%','80%'],
-						}			
+				extendCount: {               										//柱状图
+					 'xAxis.0.axisLabel.rotate': -20,							//标签旋转，太多显示不下
+					  'xAxis.0.axisLabel.interval': 2,							//标签全部显示
+					  'xAxis.0.axisTick.show': true,							//刻度显示
+					  'xAxis.0.type': 'category',								
+					  'xAxis.0.axisTick.alignWithLabel': true,					//刻度标签对齐
+					  'xAxis.0.axisLabel.align': 'center',						//刻度标签居中
+					  'xAxis.0.axisLabel.margin': 35,							//刻度标签距离刻度大小
+					  'color':["#be002f"]
 				},
+				extendAgency: {               										//柱状图
+					 'xAxis.0.axisLabel.rotate': -20,							//标签旋转，太多显示不下
+					  'xAxis.0.axisLabel.interval': 0,							//标签全部显示
+					  'xAxis.0.axisTick.show': true,							//刻度显示
+					  'xAxis.0.type': 'category',								
+					  'xAxis.0.axisTick.alignWithLabel': true,					//刻度标签对齐
+					  'xAxis.0.axisLabel.align': 'center',						//刻度标签居中
+					  'xAxis.0.axisLabel.margin': 35,							//刻度标签距离刻度大小
+					  'color':["#CAD0F0"]
+				},
+				lineGrid: {															//柱状图位置
+				        left: '3%',
+				        right: '4%',
+						height:"50%",
+				        bottom: '40%',
+				        containLabel: true
+				    },
 				grid: {															//柱状图位置
 				        left: '3%',
 				        right: '4%',
-				        bottom: '3%',
+				        bottom: '35%',
+						height:'50%',
 				        containLabel: true
 				    },
 				HisTitle: {
@@ -214,4 +253,8 @@
 </script>
 
 <style>
+	.card{
+		border: 2px solid #ccc;
+		background: #eee;
+	}
 </style>

@@ -33,8 +33,11 @@
 				</el-menu>
 			</el-aside>
 			 <el-container>
-				<el-main style="padding: 0px 0px 0px 0px;">
-					<router-view >
+				<el-main style="overflow-y: visible;max-height: 1000px;">
+					<h1 style="font-size: 25px;">{{title}}</h1>
+				
+					<router-view>
+
 					</router-view>
 				</el-main>
 			  </el-container>

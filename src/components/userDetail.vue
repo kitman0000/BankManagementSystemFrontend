@@ -1,8 +1,8 @@
 <template>
 	<div>
 		<el-form label-width="80px" v-model="detail">
-			<el-form-item label="机构id">
-				<el-input style="width: 80px;" v-model="detail.agencyID" class="inp"></el-input>
+			<el-form-item label="所属机构">
+				<el-input style="width: 200px;" v-model="detail.agencyName" class="inp"></el-input>
 				<el-button type="primary" icon="el-icon-plus" @click='dialogVisible = true' style="margin-left: 15px;">选择开户机构</el-button>
 			</el-form-item>
 			<el-form-item label="用户名">
@@ -64,7 +64,7 @@
 				</el-table-column>
 				<el-table-column label="操作" align="center" min-width="100">
 					<template slot-scope="scope">
-						<el-button type="text" @click="choseAgency(scope.row.id)">选择该机构</el-button>
+						<el-button type="text" @click="choseAgency(scope.row)">选择该机构</el-button>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -121,14 +121,14 @@
 					var changedDetail = new URLSearchParams();
 					changedDetail.append("userID", localStorage.getItem("chosenUser"));
 					changedDetail.append("username", this.detail.username);
-					changedDetail.append("agencyID", this.detail.agencyID);
+					changedDetail.append("agencyID", this.agencyID);
 					changedDetail.append("nickName", this.detail.nickName, );
 					changedDetail.append("status", index1);
 					changedDetail.append("role", this.detail.role);
 					changedDetail.append("email", this.detail.email);
 					changedDetail.append("phoneNumber", this.detail.phoneNumber);
 					changedDetail.append("sex", index2);
-					changedDetail.append("pwd", this.$md5(this.data.pwd));
+					changedDetail.append("pwd", this.$md5(this.detail.pwd));
 					changedDetail.append("birthday", this.detail.birthday);
 					changedDetail.append("pictureUrl", this.pictureUrl);
 					axios.put('/api/user/userDetail', changedDetail, {
@@ -143,7 +143,8 @@
 				}
 			},
 			choseAgency(row){
-				this.agencyID = row;
+				this.agencyID = row.id;
+				this.detail.agencyName = row.name;
 				this.dialogVisible = false;
 			},
 			search_page(currentPage){
@@ -267,7 +268,6 @@
 							var response = res.data;
 							this.detail = [];
 							this.detail = eval(response);
-							console.log(this.detail.username);
 							this.value8 = this.options[this.detail.status].label;
 							this.value9 = this.sex[this.detail.sex].label;
 						})
@@ -327,6 +327,7 @@
 				agencyNumber:null,
 				agencyList:[],
 				roleList:[],
+				agencyID:null,
 			}
 		},
 		beforeMount:function(){

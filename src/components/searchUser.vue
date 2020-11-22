@@ -8,7 +8,7 @@
 		<label style="margin-left: 10px;">用户名：</label>
 		<el-input placeholder="所要查询的用户名" v-model="searchUserName" style="width: 300px;"></el-input>
 		<el-button type="primary" @click="searchUser_searchButton()" icon="el-icon-search" style="margin-left: 10px;">搜索</el-button>
-		<el-table :data="tableData2" style="width: 100%" :row-class-name="tableRowClassName" @row-dblclick="userDetail">
+		<el-table :data="tableData2" style="width: 100%"  @row-dblclick="userDetail">
 			<el-table-column prop="userID" label="用户ID" width="200">
 			</el-table-column>
 			<el-table-column prop="username" label="用户名" width="220">
@@ -17,7 +17,7 @@
 			</el-table-column>
 			<el-table-column prop="status" label="状态" width="150">
 			</el-table-column>
-			<el-table-column prop="role" label="角色">
+			<el-table-column prop="roleName" label="角色">
 			</el-table-column>
 		</el-table>
 		<div style="text-align: center;">
@@ -61,6 +61,7 @@
 						this.tableData2=[];
 						this.tableData2=eval(response);
 						this.currentpage= currentpage;
+						this.evalStatus();
 					})
 				  .catch(function (error) {
 				    alert("请求失败！");
@@ -83,16 +84,34 @@
 						var response=res.data;
 						this.tableData2=[];
 						this.tableData2=eval(response);
+						this.evalStatus();
 					})
 				  .catch(function (error) {
-				    alert("请求失败！");
+				    alert("请求失败！" + error);
 				  });
 			},
 			userDetail(row,event){
 				localStorage.setItem("chosenUser",row.userID);
 				this.$router.push({path:'/UserDetail'});
 			},
+			evalStatus(){
+				for (var i = 0; i < this.tableData2.length; i++) {
+					var tag = this.tableData2[i].status;
+					switch(tag){
+						case 0:
+							this.tableData2[i].status = "禁用";
+							break;
+						case 1:
+							this.tableData2[i].status = "允许";
+							break;
+						case 2:
+							this.tableData2[i].status = "注销";
+							break;
+					}
+				}
+			},
 		},
+		
 		created:function(){
 			axios.get('/api/user/userPageNumber', {
 			    params: {
@@ -109,6 +128,7 @@
 			  .catch(function (error) {
 			    alert("请求失败！");
 			  });
+
 			  axios.get('/api/user/user', {
 			      params: {
 			      username: '',
@@ -122,6 +142,7 @@
 			    .then(res=>{
 						var response=res.data;
 						this.tableData2=eval(response);
+						this.evalStatus();
 					})
 		},
 		data() {

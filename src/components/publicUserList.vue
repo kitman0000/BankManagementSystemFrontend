@@ -82,6 +82,7 @@
 					<template slot-scope="scope">
 						<el-button type="text" @click="getBalance(scope.row,true)">查看贷款</el-button>
 						<el-button type="text" @click="getBalance(scope.row,false)">查看定期存款</el-button>
+						<el-button type="text" @click="getAccountList(scope.row)">查看流水账务</el-button>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -410,6 +411,11 @@
 					         confirmButtonText: '确定',
 					       });
 				});
+			},
+			getAccountList(index){
+				// 查询客户的流水账务
+				var accountID = index.id;
+				this.$router.push({path:"Transaction?accountID=" + accountID});
 			}
 		},
 		beforeMount: function() {

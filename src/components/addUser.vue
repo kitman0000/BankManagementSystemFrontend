@@ -2,7 +2,7 @@
 	<div>
 		<el-form label-width="80px" v-model="detail">
 			<el-form-item label="机构id">
-				<el-input style="width: 80px;" v-model="detail.agencyID" class="inp"></el-input>
+				<el-input style="width: 80px;" v-model="detail.agencyName" class="inp"></el-input>
 				<el-button type="primary" icon="el-icon-plus" @click='dialogVisible = true' style="margin-left: 15px;">选择开户机构</el-button>
 			</el-form-item>
 			<el-form-item label="用户名">
@@ -61,7 +61,7 @@
 				</el-table-column>
 				<el-table-column label="操作" align="center" min-width="100">
 					<template slot-scope="scope">
-						<el-button type="text" @click="choseAgency(scope.row.id)">选择该机构</el-button>
+						<el-button type="text" @click="choseAgency(scope.row)">选择该机构</el-button>
 					</template>
 				</el-table-column>
 
@@ -154,7 +154,8 @@
 					});
 			},
 			choseAgency(row) {
-				this.agencyID = row;
+				this.agencyID = row.id;
+				this.detail.agencyName = row.name;
 				this.dialogVisible = false;
 			},
 			search_page(currentPage) {
@@ -293,6 +294,7 @@
 				agencyNumber: null,
 				agencyList: [],
 				roleList:[],
+				agencyID:null,
 			}
 		},
 		beforeMount:function(){
