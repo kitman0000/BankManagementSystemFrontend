@@ -128,7 +128,7 @@
 					changedDetail.append("email", this.detail.email);
 					changedDetail.append("phoneNumber", this.detail.phoneNumber);
 					changedDetail.append("sex", index2);
-					changedDetail.append("pwd", this.$md5(this.data.pwd));
+					changedDetail.append("pwd", this.$md5(this.detail.pwd));
 					changedDetail.append("birthday", this.detail.birthday);
 					changedDetail.append("pictureUrl", this.pictureUrl);
 					axios.put('/api/user/userDetail', changedDetail, {

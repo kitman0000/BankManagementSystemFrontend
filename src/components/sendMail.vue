@@ -2,9 +2,9 @@
 	<div>
 		<el-form label-width="80px">
 			<el-form-item label="收件人">
-				<el-input v-model="value5" style="width: 150px;" placeholder="请选择">
-				</el-input>
-				<el-button type="primary" style="margin-left: 10px;border: 0px ;" icon="el-icon-plus" @click="selectOwner = true">选择负责人</el-button>
+				<span  style="width: 150px;" placeholder="请选择">{{receiver}}
+				</span>
+				<el-button type="primary" style="margin-left: 10px;border: 0px ;" icon="el-icon-plus" @click="selectOwner = true">选择收件人</el-button>
 			</el-form-item>
 			<el-form-item label="标题">
 				<el-input v-model="title"></el-input>
@@ -53,6 +53,7 @@
 	export default {
 		data() {
 			return {
+				receiver:'',
 				options: [],
 				selectOwner:false,
 				Allstaff:[],
@@ -137,6 +138,7 @@
 			},
 			selectBankOwner(owner) {
 				this.value5 = owner.userID;
+				this.receiver = owner.username;
 				this.selectOwner = false;
 			},
 			sendMail(){
