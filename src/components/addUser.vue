@@ -15,7 +15,7 @@
 				<el-input type="password" v-model="password"></el-input>
 			</el-form-item>
 			<el-form-item label="状态">
-				<el-select v-model="value8" filterable placeholder="请选择状态">
+				<el-select v-model="detail.status" filterable placeholder="请选择状态">
 					<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
 					</el-option>
 				</el-select>
@@ -32,7 +32,7 @@
 				<el-input v-model="detail.phoneNumber" style="width: 350px;"></el-input>
 			</el-form-item>
 			<el-form-item label="性别">
-				<el-select v-model="value9" filterable placeholder="请选择性别">
+				<el-select v-model="detail.sex" filterable placeholder="请选择性别">
 					<el-option v-for="item1 in sex" :key="item1.value" :label="item1.label" :value="item1.value">
 					</el-option>
 				</el-select>
@@ -101,19 +101,6 @@
 				} else if (this.detail.email == "") {
 					alert("邮箱不能为空");
 				} else {
-					var index1 = 0;
-					var index2 = 0;
-					var i = 0;
-					for (i = 0; i < 3; i++) {
-						if (this.value8 == this.options[i].value) {
-							index1 = i;
-						}
-					};
-					for (i = 0; i < 3; i++) {
-						if (this.value9 == this.sex[i].value) {
-							index2 = i;
-						}
-					};
 					if (this.password != '') {
 						this.password = this.$md5(this.password);
 					}
@@ -121,11 +108,11 @@
 					addDetail.append("username", this.detail.username);
 					addDetail.append("agencyID", this.detail.agencyID);
 					addDetail.append("nickName", this.detail.nickName, );
-					addDetail.append("status", index1);
+					addDetail.append("status", this.detail.status);
 					addDetail.append("role", this.detail.role);
 					addDetail.append("email", this.detail.email);
 					addDetail.append("phoneNumber", this.detail.phoneNumber);
-					addDetail.append("sex", index2);
+					addDetail.append("sex", this.detail.sex);
 					addDetail.append("pwd", this.password);
 					addDetail.append("birthday", this.detail.birthday);
 					addDetail.append("pictureUrl", this.pictureUrl);
@@ -263,24 +250,24 @@
 			return {
 				detail: [],
 				options: [{
-					value: '0',
+					value: 0,
 					label: '禁用'
 				}, {
-					value: '1',
+					value: 1,
 					label: '允许'
 				}, {
-					value: '2',
+					value: 2,
 					label: '注销'
 				}],
 				value8: '',
 				sex: [{
-					value: '0',
+					value: 0,
 					label: '男'
 				}, {
-					value: '1',
+					value: 1,
 					label: '女'
 				}, {
-					value: '2',
+					value: 2,
 					label: '未知'
 				}],
 				value9: '',

@@ -12,10 +12,10 @@
 				<el-input v-model="detail.nickName" style="width: 200px;"></el-input>
 			</el-form-item>
 			<el-form-item label="密码">
-				<el-input type="password" v-model="detail.pwd" style="width: 200px;"></el-input>
+				<el-input type="password" v-model="pwd" style="width: 200px;"></el-input>
 			</el-form-item>
 			<el-form-item label="状态">
-				<el-select v-model="value8" filterable placeholder="请选择状态">
+				<el-select v-model="detail.status" filterable placeholder="请选择状态">
 					<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
 					</el-option>
 				</el-select>
@@ -33,7 +33,7 @@
 				<el-input v-model="detail.phoneNumber" style="width: 500px;"></el-input>
 			</el-form-item>
 			<el-form-item label="性别">
-				<el-select v-model="value9" filterable placeholder="请选择性别">
+				<el-select v-model="detail.sex" filterable placeholder="请选择性别">
 					<el-option v-for="item1 in sex" :key="item1.value" :label="item1.label" :value="item1.value">
 					</el-option>
 				</el-select>
@@ -101,20 +101,6 @@
 				} else if (this.detail.email == "") {
 					alert("邮箱不能为空");
 				} else {
-
-					var index1 = 0;
-					var index2 = 0;
-					var i = 0;
-					for (i = 0; i < 3; i++) {
-						if (this.value8 == this.options[i].value) {
-							index1 = i;
-						}
-					};
-					for (i = 0; i < 3; i++) {
-						if (this.value9 == this.sex[i].value) {
-							index2 = i;
-						}
-					};
 					if (this.pwd != '') {
 						this.pwd = this.$md5(this.pwd);
 					}
@@ -123,12 +109,12 @@
 					changedDetail.append("username", this.detail.username);
 					changedDetail.append("agencyID", this.detail.agencyID);
 					changedDetail.append("nickName", this.detail.nickName, );
-					changedDetail.append("status", index1);
+					changedDetail.append("status", this.detail.status);
 					changedDetail.append("role", this.detail.role);
 					changedDetail.append("email", this.detail.email);
 					changedDetail.append("phoneNumber", this.detail.phoneNumber);
-					changedDetail.append("sex", index2);
-					changedDetail.append("pwd", this.$md5(this.detail.pwd));
+					changedDetail.append("sex", this.detail.sex);
+					changedDetail.append("pwd", this.pwd);
 					changedDetail.append("birthday", this.detail.birthday);
 					changedDetail.append("pictureUrl", this.pictureUrl);
 					axios.put('/api/user/userDetail', changedDetail, {
@@ -268,8 +254,6 @@
 							var response = res.data;
 							this.detail = [];
 							this.detail = eval(response);
-							this.value8 = this.options[this.detail.status].label;
-							this.value9 = this.sex[this.detail.sex].label;
 						})
 						.catch(function(error) {
 							alert("请求失败！");
@@ -296,27 +280,25 @@
 			return {
 				detail: [],
 				options: [{
-					value: '0',
+					value: 0,
 					label: '禁用'
 				}, {
-					value: '1',
+					value: 1,
 					label: '允许'
 				}, {
-					value: '2',
+					value: 2,
 					label: '注销'
 				}],
-				value8: '',
 				sex: [{
-					value: '0',
+					value: 0,
 					label: '男'
 				}, {
-					value: '1',
+					value: 1,
 					label: '女'
 				}, {
-					value: '2',
+					value: 2,
 					label: '未知'
 				}],
-				value9: '',
 				pwd: '',
 				imageUrl:null,
 				path:'/user/pic/',
