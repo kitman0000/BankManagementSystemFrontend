@@ -1,20 +1,21 @@
 <template>
 	<div>
-		<el-form label-width="300px">
+		<div style="display: inline-block;width: 50%;float: left;">
+		<el-form label-width="100px">
 			<el-form-item label="账户ID:">
 				<el-input v-model="accountID" style="width: 300px;">
 				</el-input>
 			</el-form-item>
 			<el-form-item label="贷款类型:">
-				<el-input v-model="personOrPublic" :disabled="true" style="width: 300px;">
+				<el-input v-model="personOrPublic" :disabled="true" style="width: 120px;">
 				</el-input>
 			</el-form-item>
 			<el-form-item label="贷款金额:">
-				<el-input v-model="amount" style="width: 300px;">
+				<el-input v-model="amount" style="width: 150px;">
 				</el-input>
 			</el-form-item>
-			<el-form-item label="贷款期限:">
-				<el-input v-model="month" style="width: 300px;">
+			<el-form-item label="贷款期限(月):">
+				<el-input v-model="month" style="width: 80px;">
 				</el-input>
 			</el-form-item>
 			<el-form-item label="担保类型:">
@@ -50,8 +51,19 @@
 			</el-form-item>
 		</el-form>
 		<el-button @click='applyLoan()' type="primary" icon="el-icon-check" style="border: 0px;position: relative; left:120px">确认申请</el-button>
-
-		<el-dialog title="提示" :visible.sync="dialogVisible" width="70%" :before-close="handleClose">
+		</div>
+		<div style="display: inline-block;width: 50%;">
+			<h2>{{rateType}}</h2>
+			<el-table :data="tableData2" style="width: 100%"  >
+				<el-table-column prop="startMonth" label="从" width="80">
+				</el-table-column>
+				<el-table-column prop="endMonth" label="至" width="80">
+				</el-table-column>
+				<el-table-column prop="rate" label="利率" width="220">
+				</el-table-column>
+			</el-table>
+		</div>
+		<el-dialog title="提示" :visible.sync="dialogVisible" width="70%">
 			<!-- 抵押 -->
 			<div v-if="guaranteeType == 1">
 			<el-form ref="form" :model="form" label-width="100px">
@@ -148,8 +160,10 @@
 				loanDate: null,
 				dialogVisible:false,
 				usage: null,
+				rateType:null,
 				guaranteeType: null,
 				fileList: [],
+				tableData2:[],
 				path: '/loanGuaranteeInfo/',
 				options: [{
 						label: '请输入密码',
@@ -287,16 +301,48 @@
 			},
 			getType(){
 				this.type = this.$route.query.type;
-				if(this.type = 1){
+				if(this.type == 1){
 					this.personOrPublic = '个人贷款';
+					axios.get('/api/rate/personalLoanRate', {
+						params: {
+						},
+						headers: {
+							"token": localStorage.getItem("token"),
+						}
+					})
+					.then(res => {
+						this.tableData2 = eval(res.data);
+						this.rateType = "个人贷款利率"
+					})
+					.catch(err=>	 {
+						this.$alert('请求失败', '提示', {
+						         confirmButtonText: '确定',
+						       });
+					});
 				}
-				else if(this.type = 2){
+				else if(this.type == 2){
 					this.personOrPublic = '对公贷款';
+					axios.get('/api/rate/publicLoanRate', {
+						params: {
+						},
+						headers: {
+							"token": localStorage.getItem("token"),
+						}
+					})
+					.then(res => {
+						this.tableData2 = eval(res.data);
+						this.rateType = "对公贷款利率"
+					})
+					.catch(err=>	 {
+						this.$alert('请求失败', '提示', {
+						         confirmButtonText: '确定',
+						       });
+					});
 				}
 			}
 		},
 		beforeMount: function() {
-			getType();
+			this.getType();
 		},
 		created() {
 			this.initWebSocket();

@@ -1,12 +1,13 @@
 <template>
 	<div>
+		<div style="display: inline-block;width: 50%;float: left;">
 		<el-form label-width="120px">
 			<el-form-item label="账号:">
 				<el-input v-model="accountID" style="width:300px;">
 				</el-input>
 			</el-form-item>
 			<el-form-item label="金额:">
-				<el-input v-model="amount" style="width: 300px;">
+				<el-input v-model="amount" style="width: 150px;">
 				</el-input>
 			</el-form-item>
 			<el-form-item label="定期月数:">
@@ -31,6 +32,16 @@
 			</el-form-item>
 		</el-form>
 		<el-button @click='submit()' type="primary" icon="el-icon-check" style="border: 0px;position: relative; left:120px">确认活期转定期</el-button>
+		</div>
+		<div style="display: inline-block;width: 50%;">
+		<h2>对公业务定期利率</h2>
+		 <el-table style="width: 100%;" :data="options1">
+			<el-table-column prop="month" label="月份" width="200">
+			</el-table-column>
+			<el-table-column prop="rate" label="利率(%)" width="220">
+			</el-table-column>
+		</el-table>
+		</div>
 	</div>
 </template>
 

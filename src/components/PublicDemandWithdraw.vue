@@ -6,7 +6,7 @@
 				</el-input>
 			</el-form-item>
 			<el-form-item label="金额:">
-				<el-input v-model="amount"  style="width: 300px;">
+				<el-input v-model="amount"  style="width: 150px;">
 				</el-input>
 			</el-form-item>
 			<el-form-item label="账户密码:">

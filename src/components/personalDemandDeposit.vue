@@ -1,13 +1,14 @@
 <template>
 	<div>
-		<el-form label-width="120px">
+		<el-form label-width="100px" style="margin-top: 20px;">
 			<el-form-item label="账号:">
 				<el-input v-model="accountID"  style="width: 300px;">
 				</el-input>
 			</el-form-item>
 			<el-form-item label="金额:">
-				<el-input v-model="amount"  style="width: 300px;">
+				<el-input v-model="amount"  style="width: 150px;display: inline-block; float: left;">
 				</el-input>
+				<span style="display: inline-block;margin-left: 20px;">个人业务活期利率:{{depositRate}}%</span>
 			</el-form-item>
 			<el-form-item label="账户密码:">
 				<span v-if="!pwd">密码未输入</span>
@@ -61,6 +62,7 @@
 						value:'FAILED'
 					}
 				],
+				depositRate:null,
 			}
 		},
 		methods: {
@@ -120,10 +122,26 @@
 						       });
 					});
 			},
+			getRate(){
+				axios.get('/api/rate/personalDepositRate', {
+						params: {},
+						headers: {
+							"token": localStorage.getItem("token"),
+						}
+					})
+					.then(res => {
+						this.depositRate = res.data;
+					})
+					.catch(err => {
+						this.$alert('请求失败', '提示', {
+							confirmButtonText: '确定',
+						});
+					});
+			}
 		},
 		beforeMount:function(){
 			this.initWebSocket();
-			
+			this.getRate();
 		},	
 		created() {
 		  this.websock.send('INPUT');

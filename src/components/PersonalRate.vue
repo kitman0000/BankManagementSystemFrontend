@@ -23,9 +23,6 @@
 				</template>
 			</el-table-column>
 		</el-table>
-		
-		
-
 		<el-dialog title="提示" :visible.sync="dialogVisible1" width="30%">
 			<el-form label-width="120px">
 				<el-form-item label="月份">
